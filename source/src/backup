@@ -1,0 +1,11 @@
+/*,
+    "/pagosEnvios-1.0.0/*": {
+        "target": "https://172.16.16.37:8443",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/AuthCorresponsales/*": {
+        "target": "https://172.16.16.37:8443",
+        "secure": false,
+        "logLevel": "debug"
+    }*/

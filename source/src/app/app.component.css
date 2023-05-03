@@ -1,0 +1,7 @@
+body, .jumbotron {
+    background-color: #f5f9fc;
+}
+
+.hidden {
+    display: none !important;
+}

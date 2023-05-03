@@ -1,0 +1,65 @@
+<section class="vh-30">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-12 col-xl-9">
+
+        <form class="custom-container" [formGroup]="form" (ngSubmit)="submit()">
+          <header>
+            <h5>Consulta de información</h5>
+          </header>
+
+          <section>
+            <!-- input -->
+            <div class="form-outline">
+              <label class="form-label" for="mtcn">Codigo del Giro (MTCN)</label>
+              <input type="text" 
+                  id="mtcn" 
+                  class="form-control form-control-lg" 
+                  placeholder="00000000" 
+                  formControlName="mtcn" 
+                  name="mtcn" />
+            </div>
+
+            <!-- input -->
+            <div class="form-outline">
+              <label class="form-label" for="tipo_documento">Tipo de documento</label>
+              <select id="tipo_documento" class="form-control form-control-lg"
+                formControlName="tipo_documento" name="tipo_documento">
+                <option  value="" selected>Seleccione tipo de documento</option>
+                <option *ngFor="let docType of documentTypes" [ngValue]="docType.code">{{docType.value}}</option>
+              </select>
+            </div>
+
+            <!-- input -->
+            <div class="form-outline mb-12">
+              <label class="form-label" for="numero_documento">Numero de documento</label>
+              <input type="number" id="numero_documento" class="form-control form-control-lg"
+                placeholder="Ingresa el número de documento del cliente" formControlName="numero_documento"
+                name="numero_documento" />
+            </div>
+
+            <div class="text-center text-lg-start mt-12 pt-2 btn-container center">
+              <button type="button" class="btn btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                (click)="cancel()">
+                Cancelar</button>
+
+              <button type="button" class="btn btn-lg border_blue" style="position:relative; padding-left: 2.5rem; padding-right: 2.5rem;"
+                (click)="resetForm()">
+                <span class="clean"></span>
+                Limpiar</button>
+
+              <button type="submit" class="btn btn-lg blue" style="position:relative; padding-left: 2.5rem; padding-right: 2.5rem;"
+                [disabled]="form.invalid">
+                <span class="ok"></span>
+                Continuar</button>
+
+            </div>
+          </section>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+
+</section>

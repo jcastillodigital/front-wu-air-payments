@@ -1,0 +1,12 @@
+.custom-container section {
+    position: relative !important;
+    padding: 5px 5% !important;
+}
+
+input[type='text']:read-only.green-value {
+    background-color: #A8F18E !important;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}

@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-light banner principal-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="assets/logo.png" alt="logo" width="295px" />
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+
+    <div *ngIf="authData !== null" class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <div class="row">
+        <div class="col auth-info">
+          Cajero: {{authData?.metadata?.usuario}}
+          <br />
+          Agencia: {{authData?.metadata?.agencia}}
+          <br />
+          Caja: {{authData?.metadata?.caja}}
+        </div>
+      </div>
+      
+    </div>
+
+    <button *ngIf="authData !== null" class="exit" (click)="logout()"></button>
+
+  </div>
+</nav>
+<div class="jumbotron text-left bg-light second-navbar" style="margin-bottom:0">
+  <div class="container">
+    <div>Pagos - Pago de Giros</div>
+  </div>
+</div>
+<div class="auth-info"></div>

@@ -1,0 +1,38 @@
+<div class="jumbotron">
+    <app-navbar
+    [authData]=authData
+    (interactiveLoader)="interactiveLoader($event)"
+    ></app-navbar>
+    <div class="container">
+        <div class="col-sm-12 col-sm-offset-2">
+            <ng-container *ngIf="step === 'step1'; else second">
+                <app-find-payment-form 
+                    [authData]=authData
+                    (findPaymentToMain)="findPaymentToMain($event)"
+                    (interactiveLoader)="interactiveLoader($event)"
+                    >
+                </app-find-payment-form>
+            </ng-container>
+            <ng-template #second>
+                <ng-container *ngIf="step === 'step2'">
+                    <app-create-payment-form
+                    [findPaymentRequest]="findPaymentRequest"
+                    [documentTypes]="domainItems"
+                    [moneyTransferPayFind]=moneyTransferPayFind
+                    (interactiveLoader)="interactiveLoader($event)"
+                    ></app-create-payment-form>
+                </ng-container>
+            </ng-template>
+            <br>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>
+
+<ng-container *ngIf="loaderOpener+'' === 'true'">
+    <app-loader 
+    [label]=loaderLabel
+    ></app-loader>
+</ng-container>
+
+<app-alert></app-alert>

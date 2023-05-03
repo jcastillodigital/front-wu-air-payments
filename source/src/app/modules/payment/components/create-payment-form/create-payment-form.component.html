@@ -1,0 +1,1536 @@
+<section class="vh-100">
+    <div class="container-fluid h-custom ">
+        <form [formGroup]="form">
+
+            <!-- Consulta de información -->
+
+            <div class="custom-container ligth-blue">
+                <header>
+                    <h5>Consulta de información</h5>
+                </header>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="mtcn">Codigo del Giro (MTCN)</label>
+                                <input type="text" id="mtcn" class="form-control form-control-lg" placeholder="MTCN"
+                                    formControlName="mtcn" name="mtcn" readonly />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="codTypeIdentification">Tipo de documento</label>
+                                <select type="form" id="codTypeIdentification" class="form-control form-control-lg"
+                                    formControlName="codTypeIdentification" name="codTypeIdentification" readonly>
+                                    <option *ngFor="let docType of documentTypes" [ngValue]="docType.code">
+                                        {{docType.value}}</option>
+                                </select>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="documentNumber">Numero de documento</label>
+                                <input type="number" id="documentNumber" class="form-control form-control-lg"
+                                    placeholder="Número de documento del cliente" formControlName="documentNumber"
+                                    name="documentNumber" readonly />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="idIssueDate">Fecha expedicion del
+                                    documento</label>
+
+                                <input class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['idIssueDate'].invalid"
+                                    type="date" id="idIssueDate" placeholder="dd/mm/yyyyy" formControlName="idIssueDate"
+                                    name="idIssueDate" />
+
+                                <div *ngIf="isSubmited && form.controls['idIssueDate'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['idIssueDate'].errors?.['required']">
+                                        Fecha requerida.
+                                    </label>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <!-- Información a validar del Giro -->
+
+            <div class="custom-container ligth-blue">
+                <header>
+                    <h5>Información a validar del Giro</h5>
+                </header>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="senderValName">Remitente</label>
+                                <input type="text" id="senderValName" class="form-control form-control-lg"
+                                    placeholder="Remitente" formControlName="senderValName" name="senderValName"
+                                    readonly />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="senderValCountry">País de envío</label>
+
+                                <select type="form" id="senderValCountry" formControlName="senderValCountry"
+                                    name="senderValCountry" class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['senderValCountry'].invalid">
+                                    <option value="" selected>Seleccione país</option>
+                                    <option *ngFor="let type of countries" [ngValue]="type.code">{{type.value}}</option>
+                                </select>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="senderValCity">Estado/Ciudad</label>
+                                <input type="text" id="senderValCity" class="form-control form-control-lg"
+                                    placeholder="Estado/Ciudad" formControlName="senderValCity" name="senderValCity"
+                                    readonly />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="receiverValName">Destinatario</label>
+                                <input type="text" id="receiverValName" class="form-control form-control-lg"
+                                    placeholder="Destinatario" formControlName="receiverValName" name="receiverValName"
+                                    readonly />
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <label class="form-label blue-label">Datos origen</label>
+                            <div class="row h-100 justify-content-center align-items-center">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label"
+                                                for="valOriginalDestinationCurrency">Moneda</label>
+                                            <input type="text" id="valOriginalDestinationCurrency"
+                                                class="form-control form-control-lg"
+                                                formControlName="valOriginalDestinationCurrency"
+                                                name="valOriginalDestinationCurrency" readonly />
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="valPrincipal">Valor</label>
+                                            <input type="text" id="valPrincipal" class="form-control form-control-lg"
+                                                formControlName="valPrincipal" name="valPrincipal" readonly
+                                                value="1.00" />
+                                        </div>
+                                    </section>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <label class="form-label blue-label">Rango origen</label>
+                            <div class="row h-100 justify-content-center align-items-center">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="valGMF">Inferior</label>
+                                            <input type="text" id="valGMF" class="form-control form-control-lg"
+                                                formControlName="valGMF" name="valGMF" readonly />
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="valUSD">Superior</label>
+                                            <input type="text" id="valUSD" class="form-control form-control-lg"
+                                                formControlName="valUSD" name="valUSD" readonly />
+                                        </div>
+                                    </section>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <label class="form-label blue-label">Datos destino</label>
+                            <div class="row h-100 justify-content-center align-items-center">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="codDestinationCurrency">Moneda</label>
+                                            <input type="text" id="codDestinationCurrency"
+                                                class="form-control form-control-lg"
+                                                formControlName="codDestinationCurrency" name="codDestinationCurrency"
+                                                readonly />
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="valPay">Valor</label>
+                                            <input type="text" id="valPay" class="form-control form-control-lg"
+                                                formControlName="valPay" name="valPay" readonly />
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <label class="form-label blue-label">Rango destino</label>
+                            <div class="row h-100 justify-content-center align-items-center">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="valRateExchange">Inferior</label>
+                                            <input type="text" id="valRateExchange" class="form-control form-control-lg"
+                                                formControlName="valRateExchange" name="valRateExchange" readonly />
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <section>
+                                        <div class="form-outline">
+                                            <label class="form-label" for="cashValueCOP">Superior</label>
+                                            <input type="text" id="cashValueCOP" class="form-control form-control-lg"
+                                                formControlName="cashValueCOP" name="cashValueCOP" readonly />
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+
+            <!-- Consulta de información -->
+
+            <div class="custom-container ligth-blue">
+                <header>
+                    <h5>Consulta de información</h5>
+                </header>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valFirstName">Primer nombre</label>
+                                <input type="text" id="valFirstName" class="form-control form-control-lg"
+                                    placeholder="Primer nombre" formControlName="valFirstName" name="valFirstName"
+                                    [class.border-danger]="isSubmited && form.controls['valFirstName'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valFirstName'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valFirstName'].errors?.['required']">
+                                        Primer nombre requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valMiddleName">Segundo nombre</label>
+                                <input type="text" id="valMiddleName" class="form-control form-control-lg"
+                                    placeholder="Segundo nombre" formControlName="valMiddleName" name="valMiddleName"
+                                    [class.border-danger]="isSubmited && form.controls['valMiddleName'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valMiddleName'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valMiddleName'].errors?.['required']">
+                                        Segundo nombre requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valLastName">Primer apellido</label>
+                                <input type="text" id="valLastName" class="form-control form-control-lg"
+                                    placeholder="Primer apellido" formControlName="valLastName" name="valLastName"
+                                    [class.border-danger]="isSubmited && form.controls['valLastName'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valLastName'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valLastName'].errors?.['required']">
+                                        Primer apellido requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valMiddleLastName">Segundo apellido</label>
+                                <input type="text" id="valMiddleLastName" class="form-control form-control-lg"
+                                    placeholder="Segundo apellido" formControlName="valMiddleLastName"
+                                    name="valMiddleLastName"
+                                    [class.border-danger]="isSubmited && form.controls['valMiddleLastName'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valMiddleLastName'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valMiddleLastName'].errors?.['required']">
+                                        Segundo apellido requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valNationality">País de nacimiento</label>
+                                <select type="form" id="valNationality" formControlName="valNationality"
+                                    name="valNationality" class="form-control form-control-lg"
+                                    (ngModelChange)="selectCountry($event)"
+                                    [class.border-danger]="isSubmited && form.controls['valNationality'].invalid">
+                                    <option value="" selected>Seleccione país</option>
+                                    <option *ngFor="let type of countries" [ngValue]="type.code">{{type.value}}</option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valNationality'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valNationality'].errors?.['required']">
+                                        Pais de nacimiento requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valBirthPlace">Ciudad de nacimiento</label>
+
+                                <input type="hidden" id="valBirthPlace" formControlName="valBirthPlace"
+                                    name="valBirthPlace" />
+
+                                <ng-container *ngIf="countryValue === 'CO'; else notCol">
+                                    <select type="form" id="valBirthPlace1" formControlName="valBirthPlace1"
+                                        name="valBirthPlace1" class="form-control form-control-lg"
+                                        [class.border-danger]="isSubmited && form.controls['valBirthPlace'].invalid">
+                                        <option value="" selected>Seleccione ciudad</option>
+                                        <option *ngFor="let type of cities" [ngValue]="type.code">{{type.value}}
+                                        </option>
+                                    </select>
+                                </ng-container>
+
+                                <ng-template #notCol>
+                                    <input type="text" id="valBirthPlace2" class="form-control form-control-lg"
+                                        placeholder="Ciudad de nacimiento" formControlName="valBirthPlace2"
+                                        name="valBirthPlace2"
+                                        [class.border-danger]="isSubmited && form.controls['valBirthPlace'].invalid" />
+                                </ng-template>
+
+                                <div *ngIf="isSubmited && form.controls['valBirthPlace'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valBirthPlace'].errors?.['required']">
+                                        Ciudad de nacimiento requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="dateOfBirth">Fecha de nacimiento</label>
+                                <input type="date" id="dateOfBirth" class="form-control form-control-lg"
+                                    placeholder="Fecha de nacimiento" formControlName="dateOfBirth" name="dateOfBirth"
+                                    [class.border-danger]="isSubmited && form.controls['dateOfBirth'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['dateOfBirth'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['dateOfBirth'].errors?.['required']">
+                                        Fecha de nacimiento requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valGender">Genero</label>
+
+                                <select type="form" id="valGender" class="form-control form-control-lg"
+                                    formControlName="valGender" name="valGender"
+                                    [class.border-danger]="isSubmited && form.controls['valGender'].invalid">
+                                    <option value="" selected>Seleccione genero</option>
+                                    <option *ngFor="let type of genderTypes" [ngValue]="type.code">{{type.value}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valGender'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valGender'].errors?.['required']">
+                                        Pais de nacimiento requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="row d-flex h-100 justify-content-left align-items-left">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <input class="form-check-input" type="checkbox" id="valPep" formControlName="valPep"
+                                name="valPep" (change)="validateIsPep($event)" /> <label class="margin-left-10">Cliente
+                                PEP</label>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+
+            <ng-container *ngIf="valPep === true">
+                <div class="custom-container ligth-blue">
+                    <header>
+                        <h5>Solicitud de Información para Operaciones (PEP)</h5>
+                    </header>
+                    <div class="row d-flex h-100 justify-content-center align-items-center">
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="detailActivity">Detalle de la actividad</label>
+                                    <input type="text" id="detailActivity" class="form-control form-control-lg"
+                                        placeholder="Detalle de la actividad" formControlName="detailActivity"
+                                        name="detailActivity"
+                                        [class.border-danger]="isSubmited && form.controls['detailActivity'].invalid"
+                                        [required]="valPep"
+                                        />
+
+                                    <div *ngIf="isSubmited && form.controls['detailActivity'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['detailActivity'].errors?.['required']">
+                                            Detalle de actividad requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="kinshipBeneficiary">Parentesco del
+                                        destinatario</label>
+                                    <input type="text" id="kinshipBeneficiary" class="form-control form-control-lg"
+                                        placeholder="Parentesco del destinatario" formControlName="kinshipBeneficiary"
+                                        name="kinshipBeneficiary"
+                                        [class.border-danger]="isSubmited && form.controls['kinshipBeneficiary'].invalid"
+                                        [required]="valPep" />
+
+                                    <div *ngIf="isSubmited && form.controls['kinshipBeneficiary'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['kinshipBeneficiary'].errors?.['required']">
+                                            Parentesco requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="reasonShipping">Motivo del Envío</label>
+                                    <input type="text" id="reasonShipping" class="form-control form-control-lg"
+                                        placeholder="Motivo del Envío" formControlName="reasonShipping"
+                                        name="reasonShipping"
+                                        [class.border-danger]="isSubmited && form.controls['reasonShipping'].invalid"
+                                        [required]="valPep" />
+
+                                    <div *ngIf="isSubmited && form.controls['reasonShipping'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['reasonShipping'].errors?.['required']">
+                                            Motivo de envio requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="fundsTarget">Origen del dinero enviado</label>
+                                    <input type="text" id="fundsTarget" class="form-control form-control-lg"
+                                        placeholder="Origen del dinero enviado" formControlName="fundsTarget"
+                                        name="fundsTarget"
+                                        [class.border-danger]="isSubmited && form.controls['fundsTarget'].invalid"
+                                        [required]="valPep" />
+
+                                    <div *ngIf="isSubmited && form.controls['fundsTarget'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['fundsTarget'].errors?.['required']">
+                                            Pais de nacimiento requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </div>
+                <br />
+            </ng-container>
+
+            <div class="custom-container ligth-blue">
+                <header>
+                    <h5>Datos de ubicación</h5>
+                </header>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valCountry">Pais</label>
+                                <select type="form" id="valCountry" formControlName="valCountry" name="valCountry"
+                                    class="form-control form-control-lg" (ngModelChange)="selectLocationCountry($event)"
+                                    [class.border-danger]="isSubmited && form.controls['valCountry'].invalid">
+                                    <option value="" selected>Seleccione país</option>
+                                    <option *ngFor="let type of countries" [ngValue]="type.code">{{type.value}}</option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valCountry'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valCountry'].errors?.['required']">
+                                        País requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valState">Departamento</label>
+
+                                <input type="hidden" id="valState" formControlName="valState" name="valState" />
+
+                                <ng-container *ngIf="locationCountryValue === 'CO'; else notLocationDepartmenCol">
+                                    <select type="form" id="valState1" formControlName="valState1" name="valState1"
+                                        class="form-control form-control-lg"
+                                        (ngModelChange)="selectLocationDepartment($event)"
+                                        [class.border-danger]="isSubmited && form.controls['valState'].invalid">
+                                        <option value="" selected>Seleccione departamento</option>
+                                        <option *ngFor="let type of departments" [ngValue]="type.code">{{type.value}}
+                                        </option>
+                                    </select>
+                                </ng-container>
+
+                                <ng-template #notLocationDepartmenCol>
+                                    <input type="text" class="form-control form-control-lg"
+                                        placeholder="Departamento de residencia" id="valState2"
+                                        formControlName="valState2" name="valState2"
+                                        [class.border-danger]="isSubmited && form.controls['valState'].invalid" />
+                                </ng-template>
+
+                                <div *ngIf="isSubmited && form.controls['valState'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valState'].errors?.['required']">
+                                        Departamento requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valResidencePlace">Ciudad residencia</label>
+
+                                <input type="hidden" id="valResidencePlace" formControlName="valResidencePlace"
+                                    name="valResidencePlace" />
+
+                                <ng-container *ngIf="locationCountryValue === 'CO'; else notLocationCol">
+                                    <select type="form" id="valResidencePlace1" formControlName="valResidencePlace1"
+                                        name="valResidencePlace1" class="form-control form-control-lg"
+                                        [class.border-danger]="isSubmited && form.controls['valResidencePlace'].invalid">
+                                        <option value="" selected>Seleccione ciudad</option>
+                                        <option *ngFor="let type of locationCities" [ngValue]="type.code">{{type.value}}
+                                        </option>
+                                    </select>
+                                </ng-container>
+
+                                <ng-template #notLocationCol>
+                                    <input type="text" class="form-control form-control-lg"
+                                        placeholder="Ciudad de residencia" id="valResidencePlace2"
+                                        formControlName="valResidencePlace2" name="valResidencePlace2"
+                                        [class.border-danger]="isSubmited && form.controls['valResidencePlace'].invalid" />
+                                </ng-template>
+
+                                <div *ngIf="isSubmited && form.controls['valResidencePlace'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valResidencePlace'].errors?.['required']">
+                                        Ciudad requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3"></div>
+                </div>
+
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valResidencialCountryCode">Indicativo del país</label>
+                                <select type="form" id="valResidencialCountryCode"
+                                    formControlName="valResidencialCountryCode" name="valResidencialCountryCode"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valResidencialCountryCode'].invalid">
+                                    <option value="" selected>Seleccione indicativo</option>
+                                    <option *ngFor="let type of indicatives" [ngValue]="type.name">{{type.value}}
+                                        (+{{type.name}})</option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valResidencialCountryCode'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valResidencialCountryCode'].errors?.['required']">
+                                        Indicativo requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valMobile">Celular</label>
+                                <input type="number" id="valMobile" class="form-control form-control-lg"
+                                    placeholder="Celular" formControlName="valMobile" name="valMobile"
+                                    [class.border-danger]="isSubmited && form.controls['valMobile'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valMobile'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valMobile'].errors?.['required']">
+                                        Celular requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="phoneCountryCode">Indicativo del país</label>
+                                <select type="form" id="phoneCountryCode" formControlName="phoneCountryCode"
+                                    name="phoneCountryCode" class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['phoneCountryCode'].invalid">
+                                    <option value="" selected>Seleccione indicativo</option>
+                                    <option *ngFor="let type of indicatives" [ngValue]="type.name">{{type.value}}
+                                        (+{{type.name}})</option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['phoneCountryCode'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['phoneCountryCode'].errors?.['required']">
+                                        Indicativo requerido.
+                                    </label>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valPhone">Telefono</label>
+                                <input type="number" id="valPhone" class="form-control form-control-lg"
+                                    placeholder="Telefono" formControlName="valPhone" name="valPhone"
+                                    [class.border-danger]="isSubmited && form.controls['valPhone'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valPhone'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valPhone'].errors?.['required']">
+                                        Telefono requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valAddress">Direccion de residencia</label>
+                                <input type="text" id="valAddress" class="form-control form-control-lg"
+                                    placeholder="Direccion de residencia" formControlName="valAddress" name="valAddress"
+                                    [class.border-danger]="isSubmited && form.controls['valAddress'].invalid"
+                                    readonly />
+
+                                <div *ngIf="isSubmited && form.controls['valAddress'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valAddress'].errors?.['required']">
+                                        Direccion requerida.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="addressType">Tipo de via</label>
+                                <select type="form" id="addressType" formControlName="addressType" name="addressType"
+                                    (change)="setAddress()" class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['addressType'].invalid">
+                                    <option value="" selected>Seleccione tipo de via</option>
+                                    <option *ngFor="let type of addressTypes" [ngValue]="type.name">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['addressType'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['addressType'].errors?.['required']">
+                                        Tipo de via requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="numberVia">Número de via</label>
+                                <input type="text" id="numberVia" class="form-control form-control-lg"
+                                    placeholder="Número de via" formControlName="numberVia" name="numberVia"
+                                    (change)="setAddress()"
+                                    [class.border-danger]="isSubmited && form.controls['numberVia'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['numberVia'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['numberVia'].errors?.['required']">
+                                        Numero de via requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="zone">Zona</label>
+                                <select type="form" id="zone" formControlName="zone" name="zone"
+                                    class="form-control form-control-lg" (change)="setAddress()"
+                                    [class.border-danger]="isSubmited && form.controls['zone'].invalid">
+                                    <option value="" selected>Seleccione zona</option>
+                                    <option *ngFor="let type of zones" [ngValue]="type.name">{{type.name}}</option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['zone'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['zone'].errors?.['required']">
+                                        Zona requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1">
+                        <section> <input class="form-check-input" type="checkbox" id="bis" formControlName="bis"
+                                (change)="setAddress()" name="bis" /> <label class="bis">Bis</label></section>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="bisNumber1">Numero</label>
+                                <input type="number" id="bisNumber1" class="form-control form-control-lg"
+                                    (change)="setAddress()" placeholder="Numero" formControlName="bisNumber1"
+                                    name="bisNumber1" />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="bisNumber2">Numero</label>
+                                <input type="number" id="bisNumber2" class="form-control form-control-lg"
+                                    (change)="setAddress()" placeholder="Numero" formControlName="bisNumber2"
+                                    name="bisNumber2" />
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- -->
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="otherAddress">Otra</label>
+                                <input type="text" id="otherAddress" class="form-control form-control-lg"
+                                    placeholder="Otra" formControlName="otherAddress" name="otherAddress" />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valEmail">Email</label>
+                                <input type="email" id="valEmail" class="form-control form-control-lg"
+                                    placeholder="Email" formControlName="valEmail" name="valEmail"
+                                    [class.border-danger]="isSubmited && form.controls['valEmail'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valEmail'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valEmail'].errors?.['required']">
+                                        Detalle de actividad requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6 col-xl-6"></div>
+                </div>
+
+            </div>
+            <br />
+
+            <div class="custom-container ligth-blue">
+                <header>
+                    <h5>Información - Actividad económica</h5>
+                </header>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valOccupation">Ocupacion</label>
+                                <select type="form" id="valOccupation" formControlName="valOccupation"
+                                    name="valOccupation" class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valOccupation'].invalid" 
+                                    (change)="selectOcupation()" 
+                                    >
+                                    <option value="" selected>Seleccione ocupacion</option>
+                                    <option *ngFor="let type of ocupations" [ngValue]="type.code">{{type.name}}</option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valOccupation'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valOccupation'].errors?.['required']">
+                                        Ocupación requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <ng-container *ngIf="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()">
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valJob">Cargo</label>
+                                    <select type="form" id="valJob" formControlName="valJob" name="valJob"  
+                                        class="form-control form-control-lg"
+                                        [class.border-danger]="isSubmited && form.controls['valJob'].invalid" 
+                                        [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()">
+                                        <option value="" selected>Seleccione cargo</option>
+                                        <option *ngFor="let type of positions" [ngValue]="type.id">{{type.name}}
+                                        </option>
+                                    </select>
+
+                                    <div *ngIf="isSubmited && form.controls['valJob'].invalid" class="input-feedback">
+                                        <label *ngIf="form.controls['valJob'].errors?.['required']">
+                                            Cargo requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!getValidateOcupation()">
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyName">Nombre de la entidad</label>
+                                    <input type="text" id="valCompanyName" class="form-control form-control-lg"
+                                        placeholder="Nombre de la entidad" formControlName="valCompanyName"
+                                        name="valCompanyName"
+                                        [class.border-danger]="isSubmited && form.controls['valCompanyName'].invalid" 
+                                        [required]="!getValidateOcupation()" />
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyName'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyName'].errors?.['required']">
+                                            Entidad requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="form.controls['valOccupation'].value === 'EST'">
+                        <div class="col-md-6 col-lg-6 col-xl-6"></div>
+                    </ng-container>
+
+                    <ng-container *ngIf="getValidateOcupation()">
+                        <div class="col-md-9 col-lg-9 col-xl-9"></div>
+                    </ng-container>
+
+                    <ng-container *ngIf="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()">
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyCountry">País de la entidad</label>
+
+                                    <select type="form" id="valCompanyCountry" formControlName="valCompanyCountry"
+                                        name="valCompanyCountry" class="form-control form-control-lg"
+                                        (ngModelChange)="selectCompanyCountry($event)"
+                                        [class.border-danger]="isSubmited && form.controls['valCompanyCountry'].invalid"
+                                        [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()"
+                                        >
+                                        <option value="" selected>Seleccione país</option>
+                                        <option *ngFor="let type of countries" [ngValue]="type.code">{{type.value}}
+                                        </option>
+                                    </select>
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyCountry'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyCountry'].errors?.['required']">
+                                            País requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyState">Estado de la entidad</label>
+
+                                    <input type="hidden" id="valCompanyState" formControlName="valCompanyState"
+                                        name="valCompanyState" 
+                                        [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()" />
+
+                                    <ng-container *ngIf="companyCountryValue === 'CO'; else notCompanyStateCol">
+                                        <select id="valCompanyState1" formControlName="valCompanyState1"
+                                            name="valCompanyState1" class="form-control form-control-lg"
+                                            (ngModelChange)="selectLocationCompanyDepartment($event)"
+                                            [class.border-danger]="isSubmited && form.controls['valCompanyState'].invalid">
+                                            <option value="" selected>Seleccione estado</option>
+                                            <option *ngFor="let type of departments" [ngValue]="type.code">
+                                                {{type.value}}
+                                            </option>
+                                        </select>
+                                    </ng-container>
+
+                                    <ng-template #notCompanyStateCol>
+                                        <input type="text" id="valCompanyState2" formControlName="valCompanyState2"
+                                            name="valCompanyState2" class="form-control form-control-lg"
+                                            placeholder="Estado de la entidad"
+                                            [class.border-danger]="isSubmited && form.controls['valCompanyState'].invalid" />
+                                    </ng-template>
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyState'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyState'].errors?.['required']">
+                                            Ciudad requerido.
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyCity">Ciudad de la entidad</label>
+
+                                    <input type="hidden" id="valCompanyCity" formControlName="valCompanyCity"
+                                        name="valCompanyCity" [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()" />
+
+                                    <ng-container *ngIf="companyCountryValue === 'CO'; else notCompanyCityCol">
+                                        <select id="valCompanyCity1" formControlName="valCompanyCity1"
+                                            name="valCompanyCity1" class="form-control form-control-lg"
+                                            [class.border-danger]="isSubmited && form.controls['valCompanyCity'].invalid">
+                                            <option value="" selected>Seleccione ciudad</option>
+                                            <option *ngFor="let type of locationCompanyCities" [ngValue]="type.id">
+                                                {{type.value}}
+                                            </option>
+                                        </select>
+                                    </ng-container>
+
+                                    <ng-template #notCompanyCityCol>
+                                        <input type="text" id="valCompanyCity2" formControlName="valCompanyCity2"
+                                            name="valCompanyCity2" class="form-control form-control-lg"
+                                            placeholder="Ciudad de nacimiento"
+                                            [class.border-danger]="isSubmited && form.controls['valCompanyCity'].invalid" />
+                                    </ng-template>
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyCity'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyCity'].errors?.['required']">
+                                            Ciudad requerido.
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyCountryCode">Indicativo del país</label>
+                                    
+                                    <select type="form" id="valCompanyCountryCode"
+                                        formControlName="valCompanyCountryCode" name="valCompanyCountryCode"
+                                        class="form-control form-control-lg"
+                                        [class.border-danger]="isSubmited && form.controls['valCompanyCountryCode'].invalid"
+                                        [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()" >
+                                        <option value="" selected>Seleccione indicativo</option>
+                                        <option *ngFor="let type of indicatives" [ngValue]="type.name">{{type.value}}
+                                            (+{{type.name}})</option>
+                                    </select>
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyCountryCode'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyCountryCode'].errors?.['required']">
+                                            Indicativo requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyPhone">Telefono</label>
+                                    <input type="text" id="valCompanyPhone" class="form-control form-control-lg"
+                                        placeholder="Telefono" formControlName="valCompanyPhone" name="valCompanyPhone"
+                                        [class.border-danger]="isSubmited && form.controls['valCompanyPhone'].invalid"
+                                        [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()"  />
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyPhone'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyPhone'].errors?.['required']">
+                                            Telefono requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="valCompanyAddress">Direccion de compañia</label>
+                                    <input type="text" id="valCompanyAddress" class="form-control form-control-lg"
+                                        placeholder="Direccion de residencia" formControlName="valCompanyAddress"
+                                        name="valCompanyAddress"
+                                        [class.border-danger]="isSubmited && form.controls['valCompanyAddress'].invalid"
+                                        [required]="form.controls['valOccupation'].value !== 'EST' && !getValidateOcupation()"
+                                        readonly />
+
+                                    <div *ngIf="isSubmited && form.controls['valCompanyAddress'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['valCompanyAddress'].errors?.['required']">
+                                            Dirección requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="companyAddressType">Tipo de via</label>
+                                    <select type="form" id="companyAddressType" formControlName="companyAddressType"
+                                        name="companyAddressType" class="form-control form-control-lg"
+                                        (change)="setAddress2()"
+                                        [class.border-danger]="isSubmited && form.controls['companyAddressType'].invalid" 
+                                        >
+                                        <option value="" selected>Seleccione tipo de via</option>
+                                        <option *ngFor="let type of addressTypes" [ngValue]="type.name">{{type.name}}
+                                        </option>
+                                    </select>
+
+                                    <div *ngIf="isSubmited && form.controls['companyAddressType'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['companyAddressType'].errors?.['required']">
+                                            Tipo de via requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="companyAddressNumber">Número de via</label>
+                                    <input type="number" id="companyAddressNumber" class="form-control form-control-lg"
+                                        placeholder="Número de via" formControlName="companyAddressNumber"
+                                        name="companyAddressNumber" (change)="setAddress2()"
+                                        [class.border-danger]="isSubmited && form.controls['companyAddressNumber'].invalid" />
+
+                                    <div *ngIf="isSubmited && form.controls['companyAddressNumber'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['companyAddressNumber'].errors?.['required']">
+                                            Numero de via requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="companyZone">Zona</label>
+                                    <select type="form" id="companyZone" formControlName="companyZone"
+                                        name="companyZone" class="form-control form-control-lg" (change)="setAddress2()"
+                                        [class.border-danger]="isSubmited && form.controls['companyZone'].invalid">
+                                        <option value="" selected>Seleccione zona</option>
+                                        <option *ngFor="let type of zones" [ngValue]="type.name">{{type.name}}</option>
+                                    </select>
+
+                                    <div *ngIf="isSubmited && form.controls['companyZone'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['companyZone'].errors?.['required']">
+                                            Zona requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-1 col-lg-1 col-xl-1">
+                            <section>
+                                <input class="form-check-input" type="checkbox" id="companyBis"
+                                    formControlName="companyBis" (change)="setAddress2()" name="companyBis" />
+                                <label>Bis</label>
+                            </section>
+                        </div>
+
+                        <div class="col-md-1 col-lg-1 col-xl-1">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="companyZoneNumber1">Numero</label>
+                                    <input type="number" id="companyZoneNumber1" class="form-control form-control-lg"
+                                        placeholder="Numero" formControlName="companyZoneNumber1"
+                                        name="companyZoneNumber1" (change)="setAddress2()"
+                                        [class.border-danger]="isSubmited && form.controls['companyZoneNumber1'].invalid" />
+
+                                    <div *ngIf="isSubmited && form.controls['companyZoneNumber1'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['companyZoneNumber1'].errors?.['required']">
+                                            Numero requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-1 col-lg-1 col-xl-1">
+                            <section>
+                                <div class="form-outline">
+                                    <label class="form-label" for="companyZoneNumber2">Numero</label>
+                                    <input type="number" id="companyZoneNumber2" class="form-control form-control-lg"
+                                        placeholder="Numero" formControlName="companyZoneNumber2"
+                                        name="companyZoneNumber2" (change)="setAddress2()"
+                                        [class.border-danger]="isSubmited && form.controls['companyZoneNumber2'].invalid" />
+
+                                    <div *ngIf="isSubmited && form.controls['companyZoneNumber2'].invalid"
+                                        class="input-feedback">
+                                        <label *ngIf="form.controls['companyZoneNumber2'].errors?.['required']">
+                                            Numero requerido.
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+
+                </div>
+
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+
+                </div>
+
+            </div>
+            <br />
+
+            <div class="custom-container ligth-blue">
+                <header>
+                    <h5>Información - Financiera</h5>
+                </header>
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="codEconomicActivity">Actividad económica</label>
+                                <select type="form" id="codEconomicActivity" formControlName="codEconomicActivity"
+                                    name="codEconomicActivity" class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['codEconomicActivity'].invalid">
+                                    <option value="" selected>Seleccione actividad</option>
+                                    <option *ngFor="let type of economicActivities" [ngValue]="type.code">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['codEconomicActivity'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['codEconomicActivity'].errors?.['required']">
+                                        Actividad requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valIncome">Ingresos</label>
+                                <select type="form" id="valIncome" formControlName="valIncome" name="valIncome"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valIncome'].invalid">
+                                    <option value="" selected>Seleccione rango de ingresos</option>
+                                    <option *ngFor="let type of activityRange" [ngValue]="type.code">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valIncome'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valIncome'].errors?.['required']">
+                                        Ingresos requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valOtherIncome">Otros ingresos</label>
+                                <input type="number" id="valOtherIncome" class="form-control form-control-lg"
+                                    placeholder="Otros ingresos" formControlName="valOtherIncome" name="valOtherIncome"
+                                    [class.border-danger]="isSubmited && form.controls['valOtherIncome'].invalid" />
+
+                                <div *ngIf="isSubmited && form.controls['valOtherIncome'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valOtherIncome'].errors?.['required']">
+                                        Otros ingresos requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valOtherIncomeDescription">Detalle de otros
+                                    ingresos</label>
+                                <select type="form" id="valOtherIncomeDescription"
+                                    formControlName="valOtherIncomeDescription" name="valOtherIncomeDescription"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valOtherIncomeDescription'].invalid">
+                                    <option value="" selected>Seleccione rango de ingresos</option>
+                                    <option *ngFor="let type of detailOtherIncome" [ngValue]="type.name">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valOtherIncomeDescription'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valOtherIncomeDescription'].errors?.['required']">
+                                        Rangos de ingresos requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="row d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valExpenses">Egresos</label>
+                                <select type="form" id="valExpenses" formControlName="valExpenses" name="valExpenses"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valExpenses'].invalid">
+                                    <option value="" selected>Seleccione rango de egresos</option>
+                                    <option *ngFor="let type of expenseRange" [ngValue]="type.code">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valExpenses'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valExpenses'].errors?.['required']">
+                                        Egresos requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valAssets">Activos</label>
+                                <select type="form" id="valAssets" formControlName="valAssets" name="valAssets"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valAssets'].invalid">
+                                    <option value="" selected>Seleccione rango de activos</option>
+                                    <option *ngFor="let type of activeRange" [ngValue]="type.code">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valAssets'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valAssets'].errors?.['required']">
+                                        Activos requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="valPassive">Pasivos</label>
+                                <select type="form" id="valPassive" formControlName="valPassive" name="valPassive"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valPassive'].invalid">
+                                    <option value="" selected>Seleccione rango de pasivos</option>
+                                    <option *ngFor="let type of passiveRange" [ngValue]="type.code">{{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valPassive'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['valPassive'].errors?.['required']">
+                                        Pasivos requerido.
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3"></div>
+                </div>
+
+            </div>
+            <br />
+
+            <div class="row d-flex h-100 justify-content-center align-items-center">
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="custom-container ligth-blue">
+                        <header>
+                            <h5>Informacion transaccional</h5>
+                        </header>
+
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="codDestinationOfFundsEconomic">Motivo de la
+                                    transaccion</label>
+                                <select type="form" id="codDestinationOfFundsEconomic"
+                                    formControlName="codDestinationOfFundsEconomic" name="codDestinationOfFundsEconomic"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['codDestinationOfFundsEconomic'].invalid">
+                                    <option value="" selected>Seleccione motivo</option>
+                                    <option *ngFor="let type of transactionalMotives" [ngValue]="type.code">
+                                        {{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['codDestinationOfFundsEconomic'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['codDestinationOfFundsEconomic'].errors?.['required']">
+                                        Motivo requerido.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-outline">
+                                <label class="form-label" for="valRelationshipReceiver">Parentesco</label>
+                                <select type="form" id="valRelationshipReceiver"
+                                    formControlName="valRelationshipReceiver" name="valRelationshipReceiver"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['valRelationshipReceiver'].invalid">
+                                    <option value="" selected>Seleccione parentesco</option>
+                                    <option *ngFor="let type of transactionalRelationship" [ngValue]="type.code">
+                                        {{type.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['valRelationshipReceiver'].invalid"
+                                    class="input-feedback">
+                                    <label *ngIf="form.controls['valRelationshipReceiver'].errors?.['required']">
+                                        Parentesco requerido.
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="custom-container ligth-blue">
+                        <header>
+                            <h5>Reporte de operaciones inusuales</h5>
+                        </header>
+
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="codROI">Tipo de operacion inusual</label>
+
+                                <select id="codROI" 
+                                    formControlName="codROI" 
+                                    name="codROI"
+                                    class="form-control form-control-lg"
+                                    [class.border-danger]="isSubmited && form.controls['codROI'].invalid"
+                                    >
+                                    <option value="" selected>Seleccione ROI</option>
+                                    <option *ngFor="let type of roiData" [ngValue]="type.code">{{type.value}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="isSubmited && form.controls['codROI'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['codROI'].errors?.['required']">
+                                        ROI requerido.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-outline">
+                                <label class="form-label" for="descROI">Descripcion</label>
+
+                                <input 
+                                    type="text" 
+                                    id="descROI" 
+                                    class="form-control form-control-lg"
+                                    placeholder="Descripcion" 
+                                    formControlName="descROI" 
+                                    name="descROI"
+                                    [class.border-danger]="isSubmited && form.controls['descROI'].invalid"
+                                    [required]="form.controls['codROI'].value !== '' && form.controls['codROI'].value !== 'ROI1'"
+                                    [readonly]="form.controls['codROI'].value === '' || form.controls['codROI'].value === 'ROI1'"
+                                     />
+
+                                <div *ngIf="isSubmited && form.controls['descROI'].invalid" class="input-feedback">
+                                    <label *ngIf="form.controls['descROI'].errors?.['required']">
+                                        Descripcion requerido.
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="custom-container ligth-blue">
+                        <header>
+                            <h5>Liquidación del giro en pesos</h5>
+                        </header>
+
+                        <section>
+                            <div class="form-outline">
+                                <label class="form-label" for="finalGmf">GMF</label>
+                                <input type="text" id="finalGmf" class="form-control form-control-lg" placeholder="GMF"
+                                    formControlName="finalGmf" name="finalGmf" readonly />
+                            </div>
+
+                            <div class="form-outline">
+                                <label class="form-label" for="finalValue">Valor neto a pagar</label>
+                                <input type="text" id="form3Example3" class="form-control form-control-lg green-value"
+                                    placeholder="100.000" formControlName="finalValue" name="finalValue" readonly />
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row d-flex h-100 justify-content-left align-items-left">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <h6>Certifico la calidad de información registrada y realizo la transacción a nombre propio y no a
+                        nombre de terceros.</h6>
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <input type="radio" class="custom-control-input" id="verifiedYes" formControlName="isVerified"
+                        value="yes" name="isVerified">
+                    <label class="custom-control-label" for="verifiedYes">Si</label>
+
+                    <input type="radio" class="custom-control-input" id="verifiedNo" formControlName="isVerified"
+                        value="no" name="isVerified">
+                    <label class="custom-control-label" for="verifiedNo">No</label>
+                </div>
+
+            </div>
+            <br>
+
+            <div class="row d-flex h-100 justify-content-center align-items-center">
+
+                <div class="col-md-12 col-lg-12 col-xl-12 center">
+
+                    <button type="button" class="btn btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                        (click)="cancel()">Cancelar</button>
+
+                    <!-- [disabled]="form.invalid" -->
+                    <button type="submit" class="btn btn-lg blue"
+                        style="position:relative; padding-left: 2.5rem; padding-right: 2.5rem;" (click)="next()">
+                        <span class="ok"></span>
+                        Continuar</button>
+
+                </div>
+            </div>
+            <br>
+
+
+        </form>
+    </div>
+    <br>
+
+</section>
+<div>
+    <br /><br /><br />
+</div>
